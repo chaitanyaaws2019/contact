@@ -6,11 +6,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 @Entity
+@NamedQueries(value={
+	@NamedQuery(name="getNumberOfItemsByGender", query="select count(o) from AddressBookItem o where o.gender = :gender"),
+})
 public class AddressBookItem {
 
 	@Id

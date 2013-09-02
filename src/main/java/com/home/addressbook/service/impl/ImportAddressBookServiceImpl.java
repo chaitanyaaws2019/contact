@@ -14,6 +14,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.supercsv.io.CsvListReader;
 import org.supercsv.io.ICsvListReader;
 import org.supercsv.prefs.CsvPreference;
@@ -28,6 +29,7 @@ import com.home.addressbook.service.ServiceException;
 
 import static com.google.common.base.Preconditions.*;
 
+@Service
 public class ImportAddressBookServiceImpl implements ImportAddressBookService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ImportAddressBookServiceImpl.class);
