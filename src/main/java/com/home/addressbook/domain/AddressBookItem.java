@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
@@ -25,9 +26,11 @@ public class AddressBookItem {
 	private String name;
 	
 	@Enumerated(EnumType.STRING)
+	@Index(name="ix_gender")
 	private Gender gender;
 	
 	@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	@Index(name="ix_date_of_birth")
 	private DateTime dateOfBirth;
 
 	public Long getId() {
