@@ -9,11 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.home.addressbook.domain.AddressBookItem;
@@ -22,7 +25,6 @@ import com.home.addressbook.service.AddressBookItemService;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.junit.Assert.*;
 
 @WebAppConfiguration
 @ContextConfiguration(locations={
@@ -30,6 +32,7 @@ import static org.junit.Assert.*;
 	"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
 	})
 @RunWith(SpringJUnit4ClassRunner.class)
+@TransactionConfiguration(defaultRollback=true)
 public class AddressBookRestControllerIntegrationTest {
 	
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yy");
@@ -82,6 +85,8 @@ public class AddressBookRestControllerIntegrationTest {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testPopulate() throws Exception {
 		StringBuilder sb = new StringBuilder();
 		sb.append("a b, Male, 11/02/71\n");
@@ -90,7 +95,17 @@ public class AddressBookRestControllerIntegrationTest {
 		mockMvc.perform(fileUpload("/rest/api/addressbook/populate").file(file))
 			.andExpect(status().isOk())
 			.andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
-			.andExpect(content().string("2"));
+			.andExpect(content().string("2"))
+			;
+	}
+	
+	@Test
+	public void testGetOldestPerson() throws Exception {
+		mockMvc.perform(get("/rest/api/addressbook/name-of-oldest-person"))
+			.andExpect(status().isOk())
+			.andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_PLAIN))
+			.andExpect(content().string("Wes Jackson"))
+			;
 	}
 
 }
