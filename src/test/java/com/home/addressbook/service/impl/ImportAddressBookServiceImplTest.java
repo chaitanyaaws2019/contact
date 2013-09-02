@@ -59,11 +59,32 @@ public class ImportAddressBookServiceImplTest {
 	}
 
 	@Test(expected=CsvBadFormatException.class)
+	public void testImportItemsDateTimeFormatErrorBadFormatException() throws Exception {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Bill McKnight, Male, a1-01-01").append("\n");
+		//
+		service.importItems(new ByteArrayInputStream(sb.toString().getBytes()));
+	}
+
+	@Test(expected=CsvBadFormatException.class)
+	public void testImportItemsBadGenderBadFormatException() throws Exception {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Bill McKnight, FMale, 16/03/77").append("\n");
+		//
+		service.importItems(new ByteArrayInputStream(sb.toString().getBytes()));
+	}
+
+	@Test(expected=CsvBadFormatException.class)
 	public void testImportItemsBadFormatException() throws Exception {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Bill McKnight, Male").append("\n");
 		//
 		service.importItems(new ByteArrayInputStream(sb.toString().getBytes()));
+	}
+
+	@Test(expected=NullPointerException.class)
+	public void testImportItemsNullPointerExceptionOnNullInputStream() throws Exception {
+		service.importItems(null);
 	}
 
 }
