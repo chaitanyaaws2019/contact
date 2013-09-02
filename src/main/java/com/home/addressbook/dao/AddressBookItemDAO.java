@@ -5,8 +5,8 @@ import com.home.addressbook.domain.Gender;
 
 public interface AddressBookItemDAO {
 	
-	public void persist() throws DaoException;
+	public void persist(AddressBookItem item) throws DaoException;
 	public int getNumberOfItemsByGender(Gender gender) throws DaoException;
-	public AddressBookItem findItem4OldestPerson() throws DaoException;
+	public AddressBookItem findItemForOldestPerson() throws DaoException;
 
 }

@@ -21,7 +21,7 @@ public class AddressBookItemDAOImpl implements AddressBookItemDAO {
 	}
 	
 	@Override
-	public void persist() throws DaoException {
+	public void persist(AddressBookItem item) throws DaoException {
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class AddressBookItemDAOImpl implements AddressBookItemDAO {
 	}
 
 	@Override
-	public AddressBookItem findItem4OldestPerson() throws DaoException {
+	public AddressBookItem findItemForOldestPerson() throws DaoException {
 		return null;
 	}
 
