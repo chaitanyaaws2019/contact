@@ -76,6 +76,8 @@ public class AddressBookRestControllerIntegrationTest {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testGetNumberOfMales() throws Exception {
 		mockMvc.perform(get("/rest/api/addressbook/number-of-males").accept(MediaType.TEXT_PLAIN))
 			.andExpect(status().isOk())
@@ -100,6 +102,8 @@ public class AddressBookRestControllerIntegrationTest {
 	}
 	
 	@Test
+	@Transactional
+	@Rollback(true)
 	public void testGetOldestPerson() throws Exception {
 		mockMvc.perform(get("/rest/api/addressbook/name-of-oldest-person"))
 			.andExpect(status().isOk())
